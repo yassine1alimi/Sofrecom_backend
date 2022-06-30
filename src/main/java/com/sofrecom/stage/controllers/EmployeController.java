@@ -84,16 +84,7 @@ public class EmployeController {
 
 	
 	 
-	 
-	 
-//	 @GetMapping("/photoEmploye/{id}")
-//	 public byte[] getPhoto(@PathVariable("id") Long id) throws Exception {
-//		 
-//		 Employe employe = employeRepo.findById(id).get();
-//		 return Files.readAllBytes(Paths.get(context.getRealPath("/Images/")+employe.getPhoto()));
-//		 	
-//	 }
-	 
+
 	 
 	 
 	 
@@ -169,30 +160,16 @@ public class EmployeController {
 		return emplService.getDemandeByemployeId(id);
 	}
 	
-	/*@PutMapping("/employees/{id}")
-    public ResponseEntity<Employe> updateEmployee(@PathVariable(value = "id") Long employeeId,
-         @Valid @RequestBody Employe employeeDetails)  {
-		
-        Employe employee = employeRepo.findEmployeById(employeeId);
-       
-        employee.setPhone(employeeDetails.getPhone());
-        employee.setEmail(employeeDetails.getEmail());
-        employee.setAdresse(employeeDetails.getAdresse());
-        employee.setVille(employeeDetails.getVille());
-        final Employe updatedEmployee = employeRepo.save(employee);
-        
-        return ResponseEntity.ok(updatedEmployee);
-    }*/
+	
 
-
-	// http://localhost:8081/SpringMVC/servlet/affecterEmployeAGroupe/1/1
-		@PutMapping(value = "/affecterEmployeADepartement/{idemp}/{idgroupe}") 
+	// http://localhost:8087/SpringMVC/servlet/affecterEmployeAGroupe/1/1
+		@PutMapping(value = "/affecterEmployeAGroupe/{idemp}/{idgroupe}") 
 		public void affecterEmployeAGroupe(@PathVariable("idemp")Long employeId, @PathVariable("idgroupe")int groupeId) {
 			emplService.affecterEmployeAGroupe(employeId, groupeId);
 			
 		}
 	
-		 // URL : http://localhost:8081/SpringMVC/servlet/getAllEmployeByEntreprise/1
+		 // URL : http://localhost:8087/SpringMVC/servlet/getAllEmployeByEntreprise/1
 	    @GetMapping(value = "getAllEmployeByDepartement/{iddepartement}")
 	    @ResponseBody
 		public List<Employe> getAllEmployeByDepartement(@PathVariable("iddepartement") int iddepartement) {

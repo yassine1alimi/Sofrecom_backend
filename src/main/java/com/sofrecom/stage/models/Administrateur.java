@@ -28,17 +28,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Administrateur extends UserInformation {
-	private String status;
-	private String salary;
-	//private String cnss; 
-	private String departement;
-	private String fonction;
-	private String typeContrat;
-	private LocalDate dateEntree;
-	private LocalDate dateSortie;
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@OneToOne(cascade = CascadeType.ALL)

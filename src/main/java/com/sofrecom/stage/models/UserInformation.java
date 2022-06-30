@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -61,24 +62,16 @@ public class UserInformation implements Serializable {
 	private String phone;
 	
 	private String email;
-	private String cin;
+	//private String cin;
 	private String adresse ; 
-	private String ville; 
-	private String nationality; 
-	private String family_status; 
+	//private String ville; 
 	private String photo ="avatar.jpg" ; 
-	
+	private String departement;
 	private String password;
 	private String repassword;
 	private String fonction;
 
-	//private String coutHeuresSup;
-	//private int dureeConges = 30;
-	//private int joursConges;
-	//private int soldeConges = 30;
-	//private String id_card_number;
-	
-	//private int budget = 0;
+
 	private int archived = 1 ; 
 	
 	
@@ -87,7 +80,9 @@ public class UserInformation implements Serializable {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private List<Demande> demandes;
-	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user1")
+	private List<Claim> claims;
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userReclamation")
 	private List<ReclamationClient> Reclamations;
@@ -117,11 +112,21 @@ public class UserInformation implements Serializable {
 		this.email = email;
 		this.password = password;
 	}
-/*
+
 	@JsonIgnore
 	//@JsonBackReference
 	@OneToMany(mappedBy="user2")
-	private List<Timesheet> timesheets;
+	private List<Timesheet> timesheets1;
 	
-	*/
+	@OneToMany(mappedBy = "postCreator",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private Set<Post> userPosts;
+
+
+    @OneToMany(mappedBy = "postEvaluator",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Set<EvaluatePost> evaluatePostSet;
+
+
+
+	@ElementCollection
+	Set<String> userPreferences;
 }

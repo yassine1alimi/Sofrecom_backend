@@ -49,8 +49,7 @@ public class ReportService {
 	        Map<String, Object> parameters = new HashMap<String, Object>();
             parameters.put("prenom", user.get().getPrenom());
             parameters.put("nom", user.get().getNom());
-           // parameters.put("departement", user.get().getDepartement());
-            parameters.put("cin", user.get().getCin());
+            parameters.put("departement", user.get().getDepartement());
             //parameters.put("CNSS", user.get().getCnss());
             parameters.put("adresse", user.get().getAdresse());
             parameters.put("email", user.get().getEmail());

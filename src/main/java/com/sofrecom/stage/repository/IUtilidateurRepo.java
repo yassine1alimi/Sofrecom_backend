@@ -30,6 +30,9 @@ Optional<UserInformation> findByUsername (String username);
    
 	@Query("select emp from UserInformation emp where emp.departement =:departement")
 	List<UserInformation> getAllEmployesByDepartement(@Param("departement") String departement);
+	
+	@Query("SELECT u FROM UserInformation as u ,Role as ur WHERE u.idUser=ur.id AND ur.id=:role ")
+	List<UserInformation> findUserByRole(@Param("role") int role);
 }
 	
 	

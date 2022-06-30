@@ -53,7 +53,9 @@ public class ReclamationClientService {
 			}
 			return sum;
 		}
-
+   public Long Nombre_reclamation() {
+	   return reclamationclientRepo.nombre_reclamation();
+   }
 	
 	public Long Etat_reclamation(String etat) {
 		Long sum=(long) 0;
@@ -111,7 +113,7 @@ public boolean refuserReclamationClient (Long id) {
 
 
 public List<ReclamationClient> getAllReclamationClients (ReclamationClient reclamationClient){
-	return reclamationclientRepo.findAll(); 
+	return reclamationclientRepo.getAllReclamationByDate(); 
 }
 public Optional<ReclamationClient> findReclamationClientById (Long id) {
 	return reclamationclientRepo.findById(id);

@@ -9,6 +9,7 @@ import org.omg.CORBA.UserException;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
@@ -66,7 +67,7 @@ public class UserInfoController {
 	
 	@GetMapping("/users")
 	public List<UserInformation> getAllUsers() {
-		return userRepo.findAll();
+		return userRepo.findUserByRole(1);
 	}
 
 	@GetMapping("/user/{id}")
@@ -194,7 +195,8 @@ public class UserInfoController {
         
 	}
 	
-	
+	private final Path rootLocation = Paths.get("C:\\Users\\STRIX\\Downloads1");	
+
 	
 	@PostMapping("/createEmploye")
     public ResponseEntity<?> createEmploye(@RequestPart("user") String user, @RequestParam("image") 
@@ -268,7 +270,7 @@ public class UserInfoController {
 			
 		}
 	
-	 @GetMapping("/getAllEmployeByDepartement/{departement}")
+	 @GetMapping("/getAllEmployeByDepartement111/{departement}")
 	    @ResponseBody
 	    public List<UserInformation> getAllEmployeByDepartement(@PathVariable("departement") String departement){
 		 return userService.getAllEmployeByDepartement(departement);

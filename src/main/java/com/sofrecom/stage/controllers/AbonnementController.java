@@ -89,7 +89,7 @@ public class AbonnementController {
 		str.append("Hello,");
 		str.append("Your Subscription with id:"+ a.getIdAbonnement() + " is accepted,");
 		
-		emailService.sendSimpleMessage("eya.raddaoui@esprit.tn", "Demande Accepted", str.toString());
+		emailService.sendSimpleMessage("yassine.mnasria@esprit.tn", "Demande Accepted", str.toString());
 		*/
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -32,17 +32,15 @@ public class Employe extends UserInformation {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String status;
+	//private String status;
 	private String salary;
 	//private String cnss; 
 	private String departement;
 	private String fonction;
-	//private String typeContrat;
+	
 	private LocalDate dateEntree;
 	private LocalDate dateSortie;
-	//private String coutHeuresSup;
-	//private String dureeConges;
-	//private String id_card_number;
+	
 	
 	
 	private boolean archived;
@@ -72,7 +70,10 @@ public class Employe extends UserInformation {
 		private List<ReclamationClient> ReclamationsEmploye;
 
 	
-		
+		@JsonIgnore
+		//@JsonBackReference
+		@OneToMany(mappedBy="employeAffectation")
+		private List<Affectation> affectations;
 		
 }
 

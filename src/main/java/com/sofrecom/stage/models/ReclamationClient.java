@@ -36,7 +36,7 @@ public class ReclamationClient {
 
 	private String prenom;
 	private String nom;
-	private Date date_reclamation;
+	private Date dateReclamation;
 	private String phone;
 	private String nom_societe;
 	private String email;
@@ -60,6 +60,8 @@ public class ReclamationClient {
     
 	@ManyToOne
 	private Groupe groupe;
+	
+	
 	@OneToMany(mappedBy="reclamationClient")
 	private  List<Timesheet> timesheets;
 	

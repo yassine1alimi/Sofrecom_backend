@@ -11,14 +11,15 @@ import org.springframework.stereotype.Service;
 
 import com.sofrecom.stage.models.UserInformation;
 import com.sofrecom.stage.repository.IUtilidateurRepo;
-
+import org.apache.log4j.Logger;
 
 
 
 
 @Service
 public class UserService {
-	
+	public static final Logger l = Logger.getLogger(UserService.class);
+
 	@Autowired
 	private IUtilidateurRepo userRepo;
 	
@@ -27,6 +28,8 @@ public class UserService {
 	
 	
 	public boolean updateUsername(String email, String username) {
+		l.info("authenticate user with login : "+email+ "password : "+ username);
+
 		Optional<UserInformation> opt = this.userRepo.findByEmail(email);
 		UserInformation user;
 		if(opt.isPresent()) {

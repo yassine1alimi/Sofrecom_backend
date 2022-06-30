@@ -30,6 +30,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sofrecom.stage.dto.CountStatus;
+import com.sofrecom.stage.dto.CountTypeClaim;
 import com.sofrecom.stage.models.Claim;
 import com.sofrecom.stage.models.Demande;
 import com.sofrecom.stage.models.UserInformation;
@@ -38,13 +40,15 @@ import com.sofrecom.stage.repository.IClaimRepo;
 import com.sofrecom.stage.repository.IDemandeRepo;
 import com.sofrecom.stage.repository.IUtilidateurRepo;
 import com.sofrecom.stage.services.ReclamationClientService;
+import com.sofrecom.stage.services.ClaimServiceImpl;
+import com.sofrecom.stage.services.DemandeServiceImpl;
 import com.sofrecom.stage.services.EmployeServiceImpl;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 
 public class ClaimController {
-/*	@Autowired
+	@Autowired
 	private IReclamationClientRepo candidatRepo;
 	
 	@Autowired
@@ -57,7 +61,7 @@ public class ClaimController {
 	
 	@Autowired
 	private IClaimRepo claimRepo ; 
-	
+	@Autowired
 	private EmployeServiceImpl employeService;
 	
 	 @Autowired
@@ -81,7 +85,7 @@ public class ClaimController {
 	}
 	
 	@PostMapping("/createclaim")
-    public ResponseEntity<?> createCandidate(@RequestPart("claim") String claim, @RequestParam("claim_file") 
+    public ResponseEntity<?> createclaim(@RequestPart("claim") String claim, @RequestParam("claim_file") 
     MultipartFile file1) throws JsonParseException, JsonMappingException, IOException {
 		
 		
@@ -98,6 +102,7 @@ public class ClaimController {
 					return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not saved");
 			}	
 	}
+	
 	
 	@GetMapping("/downloadFileClaim/{fileName:.+}")
 	
@@ -180,7 +185,7 @@ public class ClaimController {
 	
 	
 	@GetMapping("claims_attente")
-	public List<Claim> getClaimByStatus (){
+	public List<Claim> getClaimByStatus() {
 		return claimRepo.getClaimByStatus();
 	}
 	
@@ -188,8 +193,16 @@ public class ClaimController {
 	
 	
 	
-	*/
+	@GetMapping("percentageCountType")
+	List<CountTypeClaim> getPercentageGroupByType(){
+		return claimService.getPercentageGroupByType();
+	}
 	
+	
+	@GetMapping("percentageCountStatus")
+	List<CountStatus> getPercentageGroupByStatus(){
+		return claimService.getPercentageGroupByStatus();
+	}
 	
 	
 	

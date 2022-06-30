@@ -44,11 +44,14 @@ import com.sofrecom.stage.repository.IReclamationClientRepo;
 import com.sofrecom.stage.repository.IUtilidateurRepo;
 import com.sofrecom.stage.services.ReclamationClientService;
 
+import lombok.AllArgsConstructor;
 
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+
+@CrossOrigin
 @RestController
+@AllArgsConstructor
 public class ReclamationClientController {
 	@Autowired
 	private IReclamationClientRepo reclamationClientRepo;
@@ -193,7 +196,6 @@ private IEmployeRepo employeRepo;
 			return reclamationClientRepo.getReclamationClientByStatus();
 		}
 	 
-	 
 	 @GetMapping("/reclamationClientUser/{id}")
 		public List<ReclamationClient> getReclamationClientsByIdUser(@PathVariable("id") Long id){
 			
@@ -226,6 +228,13 @@ private IEmployeRepo employeRepo;
 	 
 	 @GetMapping("/reclamations/statnombre")
 		public Long getnombrerecalamation() {
+		Long sum = reclamationClientService.Number_reclamation();
+		return sum;
+				
+		
+	}
+	 @GetMapping("/reclamations/statnombre2")
+		public Long getnombrerecalamation2() {
 		Long sum = reclamationClientService.Number_reclamation();
 		return sum;
 				

@@ -14,7 +14,7 @@ public class TimesheetPK implements Serializable {
 
 	private Long idReclamation;
 	
-	private Long idUser;
+	private Long idEmploye;
 	
 	//Choisir le TemporalType selon le besoin metier
 	@Temporal(TemporalType.DATE)
@@ -31,12 +31,12 @@ public class TimesheetPK implements Serializable {
 		this.idReclamation = idReclamation;
 	}
 
-	public Long getIdUser() {
-		return idUser;
+	public Long getidEmploye() {
+		return idEmploye;
 	}
 
-	public void setIdUser(Long idUser) {
-		this.idUser = idUser;
+	public void setidEmploye(Long idEmploye) {
+		this.idEmploye = idEmploye;
 	}
 
 	public Date getDateDebut() {
@@ -59,10 +59,10 @@ public class TimesheetPK implements Serializable {
 		super();
 	}
 
-	public TimesheetPK(Long idReclamation, Long idUser, Date dateDebut, Date dateFin) {
+	public TimesheetPK(Long idReclamation, Long idEmploye, Date dateDebut, Date dateFin) {
 		super();
 		this.idReclamation = idReclamation;
-		this.idUser = idUser;
+		this.idEmploye = idEmploye;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 	}
@@ -92,7 +92,7 @@ public class TimesheetPK implements Serializable {
 					return false;
 			} else if (!dateFin.equals(other.dateFin))
 				return false;
-			if (idUser != other.idUser)
+			if (idEmploye != other.idEmploye)
 				return false;
 			if (idReclamation != other.idReclamation)
 				return false;

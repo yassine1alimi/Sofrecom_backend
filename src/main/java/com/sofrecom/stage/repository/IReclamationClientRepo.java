@@ -20,4 +20,12 @@ public interface IReclamationClientRepo extends JpaRepository<ReclamationClient,
 	
 	@Query("select c from ReclamationClient c where c.statusOfDemand like 'Waiting'")
 	public List<ReclamationClient> getReclamationClientByStatus();
+	
+	
+	@Query(value = "select * from reclamation_client order by date_reclamation asc", nativeQuery = true)
+	public List<ReclamationClient> getAllReclamationByDate();
+	
+	@Query("SELECT COUNT(*) FROM ReclamationClient ")
+	public Long nombre_reclamation();
+	
 }

@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class ServiceManager {
 
-	public void restTemplateAssignetask(String resourceURL,Long userid) {
+	public void restTemplateAssignetask(String resourceURL,String userid) {
 		RestTemplate restTemplate = new RestTemplate();
 		String requestJson = null;
 		HttpHeaders headers = new HttpHeaders();

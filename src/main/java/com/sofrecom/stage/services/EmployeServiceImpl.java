@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.poi.util.SystemOutLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,14 +13,17 @@ import com.sofrecom.stage.models.Demande;
 import com.sofrecom.stage.models.Departement;
 import com.sofrecom.stage.models.Employe;
 import com.sofrecom.stage.models.Groupe;
+import com.sofrecom.stage.models.UserInformation;
 import com.sofrecom.stage.repository.GroupeRepository;
 import com.sofrecom.stage.repository.IEmployeRepo;
+import com.sofrecom.stage.repository.IUtilidateurRepo;
 
 
 
 @Service
 public class EmployeServiceImpl  {
-
+	@Autowired
+	IUtilidateurRepo userRepo;
 	@Autowired
 	private IEmployeRepo employeRepo;
 	@Autowired
@@ -59,7 +63,7 @@ public class EmployeServiceImpl  {
 
 	
 	public Optional<Employe> findById(Long id) {
-
+		System.out.println(employeRepo.findById(id));
 		return employeRepo.findById(id);
 
 	}

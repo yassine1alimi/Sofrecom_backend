@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/createreclamationClient").permitAll()
 			.antMatchers("/downloadFile/{fileName:.+}").permitAll()
 			.antMatchers("/file/download/{fileName:.+}").permitAll()
-
+			.antMatchers("/ajouterTimesheet/**").permitAll()
 			.antMatchers("/avatar/{id}").permitAll()
 			.antMatchers("/employees/{id}").permitAll()
 			.anyRequest().authenticated();

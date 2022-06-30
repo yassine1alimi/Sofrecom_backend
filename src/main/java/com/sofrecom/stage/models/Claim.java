@@ -2,6 +2,7 @@ package com.sofrecom.stage.models;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,11 +33,22 @@ public class Claim implements Serializable {
 	private String statusOfDemand="Waiting";
 	private String fileClaim;
 
-	/*@ManyToOne
+	
+	
+	@ManyToOne
 	@JoinColumn(name = "idUser", referencedColumnName = "idUser")
 	private UserInformation user1;
 	
-*/
+	
+	
+	@OneToMany(mappedBy="claim")
+	private  List<Timesheet> timesheets;
+	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="claimAffectation")
+	private  List<Affectation> affectations;
+	
 
 
 }

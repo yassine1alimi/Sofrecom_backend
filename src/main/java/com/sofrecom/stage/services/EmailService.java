@@ -19,7 +19,7 @@ public class EmailService {
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getContent());
 		message.setTo(mail.getTo());
-		message.setFrom("sofrecom.recrutement1@gmail.com");
+		message.setFrom("yassine.mnasria@esprit.tn");
 
 		emailSender.send(message);
 

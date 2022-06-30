@@ -24,7 +24,7 @@ import com.sofrecom.stage.services.TodoService;
 
 
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class TodoController {
 	

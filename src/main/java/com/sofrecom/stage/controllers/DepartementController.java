@@ -23,7 +23,7 @@ import com.sofrecom.stage.services.UserService;
 
 
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class DepartementController {
 	
@@ -66,7 +66,7 @@ public class DepartementController {
 		}
 	
 	 @DeleteMapping("/groupes/{id}")
-		void deleteNote(@PathVariable int id) {
+		void deleteGroupe(@PathVariable int id) {
 		 groupeRepo.deleteById(id);
 		  }
 	

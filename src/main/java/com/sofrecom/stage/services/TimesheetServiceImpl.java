@@ -117,11 +117,11 @@ public class TimesheetServiceImpl implements ITimesheetService{
 
 
 	@Override
-	public void ajouterTimesheet(Long reclamationId, Long userId, Date dateDebut, Date dateFin) {
+	public void ajouterTimesheet(Long reclamationId, Long idEmploye, Date dateDebut, Date dateFin) {
 		TimesheetPK timesheetPK = new TimesheetPK();
 		timesheetPK.setDateDebut(dateDebut);
 		timesheetPK.setDateFin(dateFin);
-		timesheetPK.setIdUser(userId);
+		timesheetPK.setidEmploye(idEmploye);
 		timesheetPK.setIdReclamation(reclamationId);
 		Timesheet timesheet = new Timesheet();
 		timesheet.setTimesheetPK(timesheetPK);
@@ -133,13 +133,13 @@ public class TimesheetServiceImpl implements ITimesheetService{
 	}
 
 
-	
+
 	
 	
 
 
 	@Override
-	public int validerTimesheet(Long reclamationId, Long userId, Date dateDebut, Date dateFin, Long validateurId) {
+	public int validerTimesheet(Long reclamationId, Long idEmploye, Date dateDebut, Date dateFin, Long validateurId) {
 		Optional<Employe> validateur = userRepository.findById(validateurId);
 		Optional<ReclamationClient> reclamation = reclamationRepository.findById(reclamationId);
 
@@ -179,7 +179,7 @@ public class TimesheetServiceImpl implements ITimesheetService{
 			return 0;
 		}
 		//
-		TimesheetPK timesheetPK = new TimesheetPK(reclamationId, userId, dateDebut, dateFin);
+		TimesheetPK timesheetPK = new TimesheetPK(reclamationId, idEmploye, dateDebut, dateFin);
 		Timesheet timesheet = timesheetRepository.findBytimesheetPK(timesheetPK);
 		timesheet.setValide(true);
 		l.debug("timesheet validé!");
@@ -202,8 +202,8 @@ public class TimesheetServiceImpl implements ITimesheetService{
 
 
 	@Override
-	public List<ReclamationClient> findAllReclamationByEmployeJPQL(Long employeId) {
-		return	timesheetRepository.findAllReclamationByUserJPQL(employeId);
+	public List<ReclamationClient> findAllReclamationByEmployeJPQL(Long idEmploye) {
+		return	timesheetRepository.findAllReclamationByUserJPQL(idEmploye);
 	}
 
 
@@ -215,6 +215,33 @@ public class TimesheetServiceImpl implements ITimesheetService{
 		return timesheetRepository.getAllUserByReclamation(reclamationId);
 		
 	}
+
+
+
+
+	@Override
+	public void addTimesheet(Timesheet timesheet) {
+		timesheetRepository.save(timesheet)	;	
+	}
+
+
+
+
+	/*@Override
+	public void ajouterTimesheet1(Long idClaim, Long idUser, Date dateDebut, Date dateFin) {
+		TimesheetPK timesheetPK = new TimesheetPK();
+		timesheetPK.setDateDebut(dateDebut);
+		timesheetPK.setDateFin(dateFin);
+		timesheetPK.setidEmploye(idUser);
+		timesheetPK.setIdReclamation(idClaim);
+		Timesheet timesheet = new Timesheet();
+		timesheet.setTimesheetPK(timesheetPK);
+		timesheet.setValide(false); // par defaut non valide
+		timesheetRepository.save(timesheet);
+
+		l.debug("timesheet ajouté!");
+
+	}*/
 
 	
 

@@ -14,7 +14,6 @@ import com.sofrecom.stage.models.Employe;
 @Repository
 public interface IEmployeRepo extends JpaRepository<Employe, Long> {
 	
-	//public Employe findEmployeById(Long id ); 
 	@Query("SELECT count(*) FROM Employe")
     public int countuser();
 	
