@@ -117,9 +117,9 @@ public class Timesheet implements Serializable{
 	
 	
 	
-	@ManyToOne
+	/*@ManyToOne
     @JoinColumn(name = "idUser", insertable=false, updatable=false)
-	private UserInformation user2;
+	private UserInformation user2;*/
 	
 	
 }

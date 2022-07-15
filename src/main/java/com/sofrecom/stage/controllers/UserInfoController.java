@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.sofrecom.stage.models.Role;
 import com.sofrecom.stage.models.UserInformation;
 import com.sofrecom.stage.repository.IUtilidateurRepo;
 import com.sofrecom.stage.services.ReportService;
@@ -67,8 +68,24 @@ public class UserInfoController {
 	
 	@GetMapping("/users")
 	public List<UserInformation> getAllUsers() {
-		return userRepo.findUserByRole(1);
+		//return userRepo.getEmployes();
+		return userRepo.findAll();
+
 	}
+	/*@GetMapping("/users2")
+	public List<UserInformation> getAllUsers2() {
+		return userRepo.findUserByRole1();
+		//return userRepo.findAll();
+
+	}	
+	
+	@GetMapping("/users1")
+	public List<UserInformation> getAllUsers1() {
+		String roleName= "ROLE_EMPLOYE";
+		return userRepo.getEmployeList(roleName);
+		//return userRepo.findAll();
+
+	}*/
 
 	@GetMapping("/user/{id}")
 	public UserInformation findById(@PathVariable("id") Long id) {

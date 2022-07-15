@@ -4,6 +4,7 @@ package com.sofrecom.stage.controllers;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,9 @@ import com.sofrecom.stage.models.UserInformation;
 import com.sofrecom.stage.repository.IEmployeRepo;
 import com.sofrecom.stage.repository.IReclamationClientRepo;
 import com.sofrecom.stage.repository.IUtilidateurRepo;
+import com.sofrecom.stage.security.services.UserDetailsImpl;
 import com.sofrecom.stage.services.ReclamationClientService;
+import com.sofrecom.stage.utils.ServiceManager;
 
 import lombok.AllArgsConstructor;
 
@@ -58,11 +61,17 @@ public class ReclamationClientController {
 	@Autowired
 	private IUtilidateurRepo userRepo ;
 	private static final Logger logger = LoggerFactory.getLogger(ReclamationClientController.class);
-
+	
     @Autowired
     private ReclamationClientService reclamationClientService;
 @Autowired
 private IEmployeRepo employeRepo;
+
+@Autowired
+private ServiceManager serviceManager;
+
+
+
 	@PostMapping("/create")
     public ReclamationClient createCandidate(@Valid @RequestBody ReclamationClient reclamationClient) {
 		return reclamationClientRepo.save(reclamationClient);
@@ -99,12 +108,10 @@ private IEmployeRepo employeRepo;
 		ReclamationClient reclamationClient1 = new ObjectMapper().readValue(reclamationClient , ReclamationClient.class);
 				System.out.println(reclamationClient1);
 				UserInformation user = userRepo.findById(id).get();
-
 				reclamationClient1.setPj1(file1.getOriginalFilename());
 				
 				reclamationClient1.setPj2(file2.getOriginalFilename());
 				reclamationClient1.setUserReclamation(user);
-
 				ReclamationClient reclamationClient2 = reclamationClientRepo.save(reclamationClient1);
 				if (reclamationClient2!=null) {
 				return  ResponseEntity.status(HttpStatus.ACCEPTED).body("User is saved");
@@ -119,7 +126,7 @@ private IEmployeRepo employeRepo;
     MultipartFile file1,@RequestParam("pj2") MultipartFile file2) throws JsonParseException, JsonMappingException, IOException {
 		
 		
-			
+		this.serviceManager.restTemplateStart("http://localhost:9090/process/start");
 		ReclamationClient reclamationClient1 = new ObjectMapper().readValue(reclamationClient , ReclamationClient.class);
 				System.out.println(reclamationClient1);
 				
@@ -128,6 +135,11 @@ private IEmployeRepo employeRepo;
 				reclamationClient1.setPj2(file2.getOriginalFilename());
 				ReclamationClient reclamationClient2 = reclamationClientRepo.save(reclamationClient1);
 				if (reclamationClient2!=null) {
+					/*this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",reclamationClient1.getEmail());
+
+					this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");
+					String application_status = this.serviceManager.restTemplategetstatus("http://localhost:9090/process/getoutputVariables");*/
+					
 				return  ResponseEntity.status(HttpStatus.ACCEPTED).body("User is saved");
 				}else {
 					return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not saved");
@@ -163,8 +175,14 @@ private IEmployeRepo employeRepo;
     }
 	
 	@GetMapping("/getreclamationClient/{id}")
-	public ResponseEntity<ReclamationClient> findById(@PathVariable("id") Long id) {
+	public ResponseEntity<ReclamationClient> findById(@PathVariable("id") Long id,SecurityContextHolderAwareRequestWrapper request) {
+		 Principal connectedUser = request.getUserPrincipal();
+		 String currentusername = connectedUser.getName();
 		Optional<ReclamationClient> emp = reclamationClientRepo.findById(id);
+		 Optional<UserInformation> currentuser = userRepo.findByUsername(currentusername);
+	/*	this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",currentuser.get().getEmail());
+
+		this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");*/
 		if (emp.isPresent())
 			return new ResponseEntity<ReclamationClient>(emp.get(), HttpStatus.OK);
 		else
@@ -192,8 +210,15 @@ private IEmployeRepo employeRepo;
 		}
 		 
 	 @GetMapping("reclamationClients_attente")
-		public List<ReclamationClient> getReclamationClientByStatus (){
+		public List<ReclamationClient> getReclamationClientByStatus (SecurityContextHolderAwareRequestWrapper request) {
+		 Principal connectedUser = request.getUserPrincipal();
+		 String currentusername = connectedUser.getName();
+		 Optional<UserInformation> currentuser = userRepo.findByUsername(currentusername);
+			/*this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",currentuser.get().getEmail());
+			this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");*/
+
 			return reclamationClientRepo.getReclamationClientByStatus();
+
 		}
 	 
 	 @GetMapping("/reclamationClientUser/{id}")

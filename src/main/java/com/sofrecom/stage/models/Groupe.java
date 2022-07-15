@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Data
@@ -30,12 +31,17 @@ public class Groupe {
 	
 	
 	//@JsonManagedReference 
-			//@JsonIgnore
+			@JsonIgnore
 			@ManyToMany
 			private List<Employe> employes;
 			
+			
+			@JsonIgnore
 			@OneToMany(mappedBy="groupe")
 			private List<ReclamationClient> reclamations;
+			
+			
+			
 			@ManyToOne
 			private Departement departement;
 }

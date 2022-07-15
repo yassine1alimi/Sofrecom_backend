@@ -40,7 +40,7 @@ public class Claim implements Serializable {
 	private UserInformation user1;
 	
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy="claim")
 	private  List<Timesheet> timesheets;
 	

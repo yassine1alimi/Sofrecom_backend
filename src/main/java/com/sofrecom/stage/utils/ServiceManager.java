@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.sofrecom.stage.models.UserInformation;
+
 @Component
 public class ServiceManager {
 
@@ -23,6 +25,16 @@ public class ServiceManager {
 		requestJson = userid.toString();
 		
 		HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
+		ResponseEntity<String> response = restTemplate.exchange(resourceURL, HttpMethod.POST,entity,String.class);
+		System.out.println(response);
+	}
+	public void restTemplateAssignetask1(String resourceURL) {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		headers.add("Content-Type", "application/json");
+		
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
 		ResponseEntity<String> response = restTemplate.exchange(resourceURL, HttpMethod.POST,entity,String.class);
 		System.out.println(response);
 	}

@@ -45,11 +45,14 @@ public class Employe extends UserInformation {
 	
 	private boolean archived;
 	
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "employe")
 	private List<EmployeMeeting> employeMeetings;
-
+	
+	
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "employe")
+	
 	@JsonManagedReference
 	private List<Document> docs ;
 

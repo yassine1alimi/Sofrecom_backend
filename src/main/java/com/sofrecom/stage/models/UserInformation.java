@@ -113,10 +113,10 @@ public class UserInformation implements Serializable {
 		this.password = password;
 	}
 
-	@JsonIgnore
+	/*@JsonIgnore
 	//@JsonBackReference
 	@OneToMany(mappedBy="user2")
-	private List<Timesheet> timesheets1;
+	private List<Timesheet> timesheets1;*/
 	
 	@OneToMany(mappedBy = "postCreator",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<Post> userPosts;

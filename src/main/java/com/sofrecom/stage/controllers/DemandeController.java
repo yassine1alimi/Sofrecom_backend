@@ -25,12 +25,6 @@ import com.sofrecom.stage.repository.IUtilidateurRepo;
 import com.sofrecom.stage.services.DemandeServiceImpl;
 import com.sofrecom.stage.services.EmployeServiceImpl;
 /*
-import com.HRPlus.space.entities.Conge;
-import com.HRPlus.space.entities.UserInformation;
-import com.HRPlus.space.repositories.ICongeRepo;
-import com.HRPlus.space.repositories.IUtilidateurRepo;
-import com.HRPlus.space.services.CongeServiceImpl;
-import com.HRPlus.space.services.EmployeServiceImpl;
 */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController

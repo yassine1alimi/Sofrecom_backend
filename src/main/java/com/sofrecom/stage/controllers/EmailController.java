@@ -1,11 +1,13 @@
 package com.sofrecom.stage.controllers;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sofrecom.stage.models.Mail;
 import com.sofrecom.stage.models.ReclamationClient;
+import com.sofrecom.stage.models.UserInformation;
 import com.sofrecom.stage.repository.IReclamationClientRepo;
+import com.sofrecom.stage.repository.IUtilidateurRepo;
 import com.sofrecom.stage.services.EmailService;
+import com.sofrecom.stage.utils.ServiceManager;
 
 
 
@@ -28,13 +33,22 @@ public class EmailController {
 
 		@Autowired
 	    public EmailService emailService;
-		
+		@Autowired
+		private IUtilidateurRepo userRepo ;
+		@Autowired
+		private ServiceManager serviceManager;
 		@Autowired
 		public IReclamationClientRepo reclamationClientRepo ;
 		
 		@GetMapping("/sendConfirmMessage/{id}")
-		public String sendConfirmMessage(@PathVariable("id") Long id) {
-			
+		public String sendConfirmMessage(@PathVariable("id") Long id,SecurityContextHolderAwareRequestWrapper request) {
+			 Principal connectedUser = request.getUserPrincipal();
+			 String currentusername = connectedUser.getName();
+			Optional<ReclamationClient> emp = reclamationClientRepo.findById(id);
+			 Optional<UserInformation> currentuser = userRepo.findByUsername(currentusername);
+			/*this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",currentuser.get().getEmail());
+
+			this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");*/
 			Optional<ReclamationClient> reclamationClient = reclamationClientRepo.findById(id);
 			Mail mail = new Mail();
 			mail.setFrom("sofrecom.recrutement1@gmail.com");
@@ -51,6 +65,7 @@ public class EmailController {
 					"\r\n" + 
 					"best regards,");
 			emailService.sendSimpleMessage(mail);
+			
 			return "message sent successffully";
 			
 		}

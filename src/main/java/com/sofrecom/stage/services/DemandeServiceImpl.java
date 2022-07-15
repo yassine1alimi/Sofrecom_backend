@@ -57,14 +57,8 @@ public class DemandeServiceImpl  {
 	
 	
 	
-//	public void accepterConge(Long id) {
-//		Optional<Conge> conge = congeService.findCongeById(id);
-//		if (conge.isPresent()) {
-//			
-//			conge.get().setStatusOfDemand(conge.get().getStatusOfDemand().ACCEPTED);
-//			congeRepo.save(conge.get());
-//		}
-//	}
+
+
 	
 	public void accepterDemande(Long id) {
 		

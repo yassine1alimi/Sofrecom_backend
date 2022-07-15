@@ -33,6 +33,18 @@ Optional<UserInformation> findByUsername (String username);
 	
 	@Query("SELECT u FROM UserInformation as u ,Role as ur WHERE u.idUser=ur.id AND ur.id=:role ")
 	List<UserInformation> findUserByRole(@Param("role") int role);
+	
+	
+	
+	
+	
+	@Query(value = "SELECT * FROM user_roles u where u.role_id=:2", nativeQuery = true)
+	List<UserInformation> findUserByRole1();
+
+	//List<UserInformation> getEmployeList(String roleName);
+	
+	
+	
 }
 	
 	
