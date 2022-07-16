@@ -17,7 +17,9 @@ public interface IReclamationClientRepo extends JpaRepository<ReclamationClient,
 	//Optional<ReclamationClient> findByIdUser(Long id);
 //	@Query("select c from Reclamation c where c.nom !=null")
 //	List<Reclamation> getNonClient();
-	
+	  //List<ReclamationClient> findByUserId(Long id);
+		//Optional<ReclamationClient> findByIdUser(Long id);
+//		@Query("select c from Reclamation c where c.nom !=null")
 	@Query("select c from ReclamationClient c where c.statusOfDemand like 'Waiting'")
 	public List<ReclamationClient> getReclamationClientByStatus();
 	
