@@ -68,17 +68,17 @@ public class UserInfoController {
 	
 	@GetMapping("/users")
 	public List<UserInformation> getAllUsers() {
-		//return userRepo.getEmployes();
+		//return userRepo.getAllEmployeByRole();
 		return userRepo.findAll();
 
 	}
-	/*@GetMapping("/users2")
+	@GetMapping("/users2")
 	public List<UserInformation> getAllUsers2() {
-		return userRepo.findUserByRole1();
-		//return userRepo.findAll();
+		return userRepo.findUserByRole1(2);
+		//return userRepo.findUserByRole9("ROLE_EMPLOYE");
 
 	}	
-	
+	/*
 	@GetMapping("/users1")
 	public List<UserInformation> getAllUsers1() {
 		String roleName= "ROLE_EMPLOYE";
@@ -223,7 +223,6 @@ public class UserInfoController {
 			
 				UserInformation user1 = new ObjectMapper().readValue(user , UserInformation.class);
 				System.out.println(user1);
-				
 				user1.setPhoto(file1.getOriginalFilename());
 				UserInformation user2 = userRepo.save(user1);
 				if (user2!=null) {

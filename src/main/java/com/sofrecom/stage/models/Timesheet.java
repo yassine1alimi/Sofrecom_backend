@@ -9,6 +9,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.ocpsoft.rewrite.config.True;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,13 +18,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 @Entity
-
+@Table(name = "timesheet")
 public class Timesheet implements Serializable{
 	/*private static final long serialVersionUID = 1L;
 	@Id
@@ -46,6 +49,8 @@ public class Timesheet implements Serializable{
 		private Claim claim;*/
 	private static final long serialVersionUID = 3876346912862238239L;
 
+	private static final boolean True = false;
+
 	@EmbeddedId
 	private TimesheetPK timesheetPK;
 	
@@ -54,15 +59,15 @@ public class Timesheet implements Serializable{
     @JoinColumn(name = "idReclamation")
 	private ReclamationClient reclamationClient;
 	*/
-	
+	/*
 	@ManyToOne
-    @JoinColumn(name = "idReclamation", insertable=false, updatable=false)
-	private ReclamationClient reclamationClient;
+    @JoinColumn(name = "idReclamation", insertable=false, updatable=false, nullable=True)
+	private ReclamationClient reclamationClient;*/
 	
 	
-	@ManyToOne
+	/*@ManyToOne
     @JoinColumn(name = "idClaim", insertable=false, updatable=false)
-	private Claim claim;
+	private Claim claim;*/
 	
 	
 	
@@ -97,13 +102,13 @@ public class Timesheet implements Serializable{
 		this.timesheetPK = timesheetPK;
 	}
 
-	public ReclamationClient getReclamationClient() {
+	/*public ReclamationClient getReclamationClient() {
 		return reclamationClient;
 	}
 
 	public void setReclamationClient(ReclamationClient reclamationClient) {
 		this.reclamationClient = reclamationClient;
-	}
+	}*/
 
 	public Employe getEmploye() {
 		return employe;

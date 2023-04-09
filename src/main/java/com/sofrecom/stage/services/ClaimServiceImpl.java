@@ -10,6 +10,8 @@ import com.sofrecom.stage.dto.CountStatus;
 import com.sofrecom.stage.dto.CountTypeClaim;
 import com.sofrecom.stage.models.Claim;
 import com.sofrecom.stage.models.Demande;
+import com.sofrecom.stage.models.Groupe;
+import com.sofrecom.stage.models.Meeting;
 import com.sofrecom.stage.models.UserInformation;
 import com.sofrecom.stage.repository.IClaimRepo;
 import com.sofrecom.stage.repository.IDemandeRepo;
@@ -95,4 +97,11 @@ public void accepterClaim(Long id) {
 		return claimRepo.getPercentageGroupByStatus();
 	}
 	
+	
+	
+	
+/*	public List<Claim> getClaimByGroupe() {
+		
+		return (List<Claim>) claimRepo.getClaimByGroupe();
+	}*/
 }

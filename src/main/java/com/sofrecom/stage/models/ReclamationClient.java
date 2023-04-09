@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +25,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "reclamation_client")
 public class ReclamationClient {
 
 	private static final long serialVersionUID = 1L;
@@ -48,11 +50,11 @@ public class ReclamationClient {
 	//private String nationality; 
 	private String typeClaim;
 	private String description;
-	private String statusOfDemand="Waiting";
+	private String statusOfDemand="NOT_YET_TREATED";
 	private String pj1;
 	private String pj2;
 	private Boolean archived ; 
-	
+	private String name_groupe;
 	
 	@ManyToOne
 	@JoinColumn(name = "idUser", referencedColumnName = "idUser")
@@ -61,10 +63,10 @@ public class ReclamationClient {
 	@ManyToOne
 	private Groupe groupe;
 	
-	
+	/*
 	@OneToMany(mappedBy="reclamationClient")
 	private  List<Timesheet> timesheets;
-	
+	*/
 	@ManyToOne
 	@JoinColumn(name = "idUser", referencedColumnName = "idUser", insertable = false, updatable = false)
 	private UserInformation userReclamation;

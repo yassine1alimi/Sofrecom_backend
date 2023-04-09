@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sofrecom.stage.models.Demande;
 import com.sofrecom.stage.models.Departement;
 import com.sofrecom.stage.models.Employe;
+import com.sofrecom.stage.models.UserInformation;
 import com.sofrecom.stage.repository.IEmployeRepo;
 import com.sofrecom.stage.services.EmployeServiceImpl;
 import com.sofrecom.stage.services.IDepartementService;

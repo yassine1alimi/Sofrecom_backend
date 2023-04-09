@@ -45,7 +45,7 @@ uniqueConstraints = {
 public class UserInformation implements Serializable {
 
 	
-	private static final long serialVersionUID = 1L;
+	private static long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idUser;
@@ -62,7 +62,7 @@ public class UserInformation implements Serializable {
 	private String phone;
 	
 	private String email;
-	//private String cin;
+	private String cin;
 	private String adresse ; 
 	//private String ville; 
 	private String photo ="avatar.jpg" ; 
@@ -70,6 +70,10 @@ public class UserInformation implements Serializable {
 	private String password;
 	private String repassword;
 	private String fonction;
+private String groupe_name;
+private LocalDate dateEntree;
+private LocalDate dateSortie;
+private String salary;
 
 
 	private int archived = 1 ; 
@@ -129,4 +133,275 @@ public class UserInformation implements Serializable {
 
 	@ElementCollection
 	Set<String> userPreferences;
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
+	public static void setSerialversionuid(long serialversionuid) {
+		serialVersionUID = serialversionuid;
+	}
+
+
+	public Long getIdUser() {
+		return idUser;
+	}
+
+
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+
+	public String getNom() {
+		return nom;
+	}
+
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getCin() {
+		return cin;
+	}
+
+
+	public void setCin(String cin) {
+		this.cin = cin;
+	}
+
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+
+	public String getPhoto() {
+		return photo;
+	}
+
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+
+	public String getDepartement() {
+		return departement;
+	}
+
+
+	public void setDepartement(String departement) {
+		this.departement = departement;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public String getRepassword() {
+		return repassword;
+	}
+
+
+	public void setRepassword(String repassword) {
+		this.repassword = repassword;
+	}
+
+
+	public String getFonction() {
+		return fonction;
+	}
+
+
+	public void setFonction(String fonction) {
+		this.fonction = fonction;
+	}
+
+
+	public String getGroupe_name() {
+		return groupe_name;
+	}
+
+
+	public void setGroupe_name(String groupe_name) {
+		this.groupe_name = groupe_name;
+	}
+
+
+	public LocalDate getDateEntree() {
+		return dateEntree;
+	}
+
+
+	public void setDateEntree(LocalDate dateEntree) {
+		this.dateEntree = dateEntree;
+	}
+
+
+	public LocalDate getDateSortie() {
+		return dateSortie;
+	}
+
+
+	public void setDateSortie(LocalDate dateSortie) {
+		this.dateSortie = dateSortie;
+	}
+
+
+	public String getSalary() {
+		return salary;
+	}
+
+
+	public void setSalary(String salary) {
+		this.salary = salary;
+	}
+
+
+	public int getArchived() {
+		return archived;
+	}
+
+
+	public void setArchived(int archived) {
+		this.archived = archived;
+	}
+
+
+	public List<Demande> getDemandes() {
+		return demandes;
+	}
+
+
+	public void setDemandes(List<Demande> demandes) {
+		this.demandes = demandes;
+	}
+
+
+	public List<Claim> getClaims() {
+		return claims;
+	}
+
+
+	public void setClaims(List<Claim> claims) {
+		this.claims = claims;
+	}
+
+
+	public List<ReclamationClient> getReclamations() {
+		return Reclamations;
+	}
+
+
+	public void setReclamations(List<ReclamationClient> reclamations) {
+		Reclamations = reclamations;
+	}
+
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+
+	public Set<Post> getUserPosts() {
+		return userPosts;
+	}
+
+
+	public void setUserPosts(Set<Post> userPosts) {
+		this.userPosts = userPosts;
+	}
+
+
+	public Set<EvaluatePost> getEvaluatePostSet() {
+		return evaluatePostSet;
+	}
+
+
+	public void setEvaluatePostSet(Set<EvaluatePost> evaluatePostSet) {
+		this.evaluatePostSet = evaluatePostSet;
+	}
+
+
+	public Set<String> getUserPreferences() {
+		return userPreferences;
+	}
+
+
+	public void setUserPreferences(Set<String> userPreferences) {
+		this.userPreferences = userPreferences;
+	}
+	
 }

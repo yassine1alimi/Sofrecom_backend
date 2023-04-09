@@ -1,6 +1,7 @@
 package com.sofrecom.stage.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,13 @@ public interface IClaimRepo extends JpaRepository<Claim, Long> {
 	
 	@Query(value ="select new com.sofrecom.stage.dto.CountStatus(COUNT(*)/(Select COUNT(*) from Claim)*100,statusOfDemand)from Claim GROUP BY statusOfDemand")
     public List<CountStatus> getPercentageGroupByStatus();
+
+/*@Query(value="SELECT c FROM Claim c INNER JOIN UserInformation ON c.groupe_name=UserInformation.groupe_name ")
+public List<Claim> getClaimByGroupe();*/
+	
+	/*@Query("SELECT * FROM claim LEFT JOIN users on claim.groupe_name = users.groupe_name")
+	public List<Claim> getClaimByGroupe();*/
+	
+	
+	public Claim save(Optional<Claim> claim);
 }

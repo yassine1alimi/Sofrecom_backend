@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +35,7 @@ import com.sofrecom.stage.dto.CountStatus;
 import com.sofrecom.stage.dto.CountTypeClaim;
 import com.sofrecom.stage.models.Claim;
 import com.sofrecom.stage.models.Demande;
+import com.sofrecom.stage.models.Meeting;
 import com.sofrecom.stage.models.UserInformation;
 import com.sofrecom.stage.repository.IReclamationClientRepo;
 import com.sofrecom.stage.repository.IClaimRepo;
@@ -205,5 +207,28 @@ public class ClaimController {
 	}
 	
 	
+	@PutMapping("/affecterClaimGroupe")
+	public Claim affecterClaimGroupe(@RequestBody Claim claim) {
+		
+		return claimRepo.save(claim);
+	}
 	
+	
+	@PostMapping("/claims/create")
+	public ResponseEntity<Claim> CreateMeeting(@RequestBody Claim meeting) {
+		try {
+			claimRepo.save(meeting);
+			return new ResponseEntity<Claim>(meeting, HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			return new ResponseEntity<Claim>(HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+	
+	
+	
+//   @GetMapping("ClaimByGroupe")
+//	List<Claim> getClaimByGroupe(){
+//		return claimService.getClaimByGroupe();
+//	}
+//	
 }

@@ -126,7 +126,7 @@ private ServiceManager serviceManager;
     MultipartFile file1,@RequestParam("pj2") MultipartFile file2) throws JsonParseException, JsonMappingException, IOException {
 		
 		
-		this.serviceManager.restTemplateStart("http://localhost:9090/process/start");
+	/*	this.serviceManager.restTemplateStart("http://localhost:9090/process/start");*/
 		ReclamationClient reclamationClient1 = new ObjectMapper().readValue(reclamationClient , ReclamationClient.class);
 				System.out.println(reclamationClient1);
 				
@@ -136,7 +136,6 @@ private ServiceManager serviceManager;
 				ReclamationClient reclamationClient2 = reclamationClientRepo.save(reclamationClient1);
 				if (reclamationClient2!=null) {
 					/*this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",reclamationClient1.getEmail());
-
 					this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");
 					String application_status = this.serviceManager.restTemplategetstatus("http://localhost:9090/process/getoutputVariables");*/
 					
@@ -180,7 +179,7 @@ private ServiceManager serviceManager;
 		 String currentusername = connectedUser.getName();
 		Optional<ReclamationClient> emp = reclamationClientRepo.findById(id);
 		 Optional<UserInformation> currentuser = userRepo.findByUsername(currentusername);
-	/*	this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",currentuser.get().getEmail());
+		/*this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",currentuser.get().getEmail());
 
 		this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");*/
 		if (emp.isPresent())
@@ -209,12 +208,12 @@ private ServiceManager serviceManager;
 		 reclamationClientService.refuserReclamationClient(id);
 		}
 		 
-	 @GetMapping("reclamationClients_attente")
+	 @GetMapping("/reclamationClients_attente")
 		public List<ReclamationClient> getReclamationClientByStatus (SecurityContextHolderAwareRequestWrapper request) {
 		 Principal connectedUser = request.getUserPrincipal();
 		 String currentusername = connectedUser.getName();
 		 Optional<UserInformation> currentuser = userRepo.findByUsername(currentusername);
-			/*this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",currentuser.get().getEmail());
+	/*		this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",currentuser.get().getEmail());
 			this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");*/
 
 			return reclamationClientRepo.getReclamationClientByStatus();

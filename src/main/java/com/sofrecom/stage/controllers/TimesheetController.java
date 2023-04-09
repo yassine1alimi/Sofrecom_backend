@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sofrecom.stage.dto.ReclamationDto;
 import com.sofrecom.stage.models.Employe;
 import com.sofrecom.stage.models.ReclamationClient;
 import com.sofrecom.stage.models.Timesheet;
@@ -74,7 +76,7 @@ public class TimesheetController {
 		
 		@PostMapping("/ajouterTimesheet/{idreclamation}/{idEmploye}/{dated}/{datef}")
 		@ResponseBody
-		public void ajouterTimesheet(@PathVariable("idreclamation") Long reclamationId, @PathVariable("idEmploye") Long idEmploye, @PathVariable("dated") Date dateDebut,@PathVariable("datef") Date dateFin) {
+		public void ajouterTimesheet(@PathVariable("idreclamation") Long reclamationId, @PathVariable("idEmploye") Long idEmploye, @PathVariable("dated") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateDebut,@PathVariable("datef") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateFin) {
 			itimesheetservice.ajouterTimesheet(reclamationId, idEmploye, dateDebut, dateFin);
 		}
 		
@@ -105,8 +107,8 @@ public class TimesheetController {
 		
 		
 		
-		// URL : http://localhost:8087/SpringMVC/servlet/findAllReclamationByEmployeJPQL/1
-	    @GetMapping(value = "findAllReclamtionByEmployeJPQL/{idEmploye}")
+		// URL : http://localhost:8087/findAllReclamationByEmployeJPQL/1
+	    @GetMapping(value = "/findAllReclamtionByEmployeJPQL/{idEmploye}")
 	    @ResponseBody
 		public List<ReclamationClient> findAllReclamationByEmployeJPQL(@PathVariable("idEmploye") Long idEmploye) {
 

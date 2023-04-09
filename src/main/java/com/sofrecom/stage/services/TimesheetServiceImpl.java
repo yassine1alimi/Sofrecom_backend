@@ -3,6 +3,7 @@ package com.sofrecom.stage.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sofrecom.stage.dto.ReclamationDto;
 import com.sofrecom.stage.models.ERole;
 import com.sofrecom.stage.models.Employe;
 import com.sofrecom.stage.models.Groupe;
@@ -209,12 +210,12 @@ public class TimesheetServiceImpl implements ITimesheetService{
 
 
 
-	@Override
+	/*@Override
 	public List<Employe> getAllEmployeByReclamation(Long reclamationId) {
 		
-		return timesheetRepository.getAllUserByReclamation(reclamationId);
+		return reclamationRepository.getAllUserByReclamation(reclamationId);
 		
-	}
+	}*/
 
 
 
@@ -224,6 +225,32 @@ public class TimesheetServiceImpl implements ITimesheetService{
 		timesheetRepository.save(timesheet)	;	
 	}
 
+
+
+
+	@Override
+	public List<Employe> getAllEmployeByReclamation(Long reclamationId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+/*
+
+@Override
+public List<Timesheet> findAllReclamationByEmployeJPQL(Long idEmploye) {
+	// TODO Auto-generated method stub
+	return	timesheetRepository.findAllReclamationByUserJPQL(idEmploye);}
+
+
+
+
+@Override
+public List<Employe> getAllEmployeByReclamation(Long reclamationId) {
+	// TODO Auto-generated method stub
+	return null;
+}
+*/
 
 
 

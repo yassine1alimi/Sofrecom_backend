@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sofrecom.stage.models.Departement;
 import com.sofrecom.stage.models.Employe;
+import com.sofrecom.stage.models.UserInformation;
 
 
 @Repository
@@ -31,5 +32,8 @@ public interface IEmployeRepo extends JpaRepository<Employe, Long> {
 				+ "join groupes.departement depart "
 				+ "where depart=:departement")
 	    public List<Employe> getAllEmployeByDepartementc(@Param("departement") Departement departement);
+	 
+	 
+	
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
@@ -28,6 +29,12 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Employe extends UserInformation {
 
+	public Employe(String username, String email, LocalDate dateOfBirth, String phone, String password) {
+		super(username, email, dateOfBirth, phone, password);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	/**
 	 * 
 	 */
@@ -35,14 +42,14 @@ public class Employe extends UserInformation {
 	//private String status;
 	private String salary;
 	//private String cnss; 
-	private String departement;
+	private String groupe_name;
 	private String fonction;
 	
 	private LocalDate dateEntree;
 	private LocalDate dateSortie;
 	
-	
-	
+	 
+	@Column(name = "archived")
 	private boolean archived;
 	
 	@JsonIgnore
@@ -77,6 +84,7 @@ public class Employe extends UserInformation {
 		//@JsonBackReference
 		@OneToMany(mappedBy="employeAffectation")
 		private List<Affectation> affectations;
+		
 		
 }
 

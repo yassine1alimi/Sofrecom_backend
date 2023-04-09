@@ -22,6 +22,7 @@ import com.sofrecom.stage.models.UserInformation;
 import com.sofrecom.stage.repository.IReclamationClientRepo;
 import com.sofrecom.stage.repository.IUtilidateurRepo;
 import com.sofrecom.stage.services.EmailService;
+import com.sofrecom.stage.services.ReclamationClientService;
 import com.sofrecom.stage.utils.ServiceManager;
 
 
@@ -33,6 +34,9 @@ public class EmailController {
 
 		@Autowired
 	    public EmailService emailService;
+		@Autowired
+		public ReclamationClientService recservice;
+		
 		@Autowired
 		private IUtilidateurRepo userRepo ;
 		@Autowired
@@ -50,6 +54,8 @@ public class EmailController {
 
 			this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");*/
 			Optional<ReclamationClient> reclamationClient = reclamationClientRepo.findById(id);
+			ReclamationClient rec = reclamationClient.get();
+			recservice.accepterReclamationClient(rec.getIdReclamation());
 			Mail mail = new Mail();
 			mail.setFrom("sofrecom.recrutement1@gmail.com");
 			mail.setTo(reclamationClient.get().getEmail());

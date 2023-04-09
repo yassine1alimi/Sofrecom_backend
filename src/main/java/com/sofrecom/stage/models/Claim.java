@@ -1,6 +1,7 @@
 package com.sofrecom.stage.models;
 
 import java.io.Serializable;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -17,6 +18,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,6 +39,9 @@ public class Claim implements Serializable {
 	private String description;
 	private String statusOfDemand="Waiting";
 	private String fileClaim;
+    private String priorite;
+    private String groupe_name;
+	
 
 	
 	
@@ -40,9 +50,9 @@ public class Claim implements Serializable {
 	private UserInformation user1;
 	
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy="claim")
-	private  List<Timesheet> timesheets;
+	private  List<Timesheet> timesheets;*/
 	
 	
 	@JsonIgnore

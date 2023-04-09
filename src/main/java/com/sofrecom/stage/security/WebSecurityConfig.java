@@ -59,12 +59,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
 			.antMatchers("/api/test/**").permitAll()
+            .antMatchers("/post").permitAll() // On autorise l'appel handshake entre le client et le serveur
+
 			.antMatchers("/createreclamationClient").permitAll()
 			.antMatchers("/downloadFile/{fileName:.+}").permitAll()
 			.antMatchers("/file/download/{fileName:.+}").permitAll()
 			.antMatchers("/ajouterTimesheet/**").permitAll()
 			.antMatchers("/avatar/{id}").permitAll()
 			.antMatchers("/employees/{id}").permitAll()
+			.antMatchers("/affecterClaimGroupe").permitAll()
+			.antMatchers("/createContact").permitAll()
+			.antMatchers("/faqs").permitAll()
+			.antMatchers("/addPostFile/**").permitAll()
+
+			/*.antMatchers("/post").permitAll()
+			.antMatchers("/Evaluatepost").permitAll()
+			.antMatchers("/comment").permitAll()*/
+
 			.anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
