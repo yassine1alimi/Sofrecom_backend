@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/createContact").permitAll()
 			.antMatchers("/faqs").permitAll()
 			.antMatchers("/addPostFile/**").permitAll()
-
+				.antMatchers("/createEmploye").permitAll()
 			/*.antMatchers("/post").permitAll()
 			.antMatchers("/Evaluatepost").permitAll()
 			.antMatchers("/comment").permitAll()*/

@@ -3,16 +3,16 @@ package com.sofrecom.stage.controllers;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import com.sofrecom.stage.models.ERole;
+import com.sofrecom.stage.repository.RoleRepository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.omg.CORBA.UserException;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,6 +50,8 @@ import javax.management.relation.RelationNotFoundException;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
+import static com.sofrecom.stage.models.ERole.ROLE_ADMIN;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserInfoController {
@@ -59,7 +61,8 @@ public class UserInfoController {
 
 	@Autowired
 	private IUtilidateurRepo userRepo;
-	
+	@Autowired
+	RoleRepository roleRepository;
 	@Autowired
 	private UserService userService;
 
@@ -215,7 +218,7 @@ public class UserInfoController {
 	private final Path rootLocation = Paths.get("C:\\Users\\STRIX\\Downloads1");	
 
 	
-	@PostMapping("/createEmploye")
+	/*@PostMapping("/createEmploye")
     public ResponseEntity<?> createEmploye(@RequestPart("user") String user, @RequestParam("image") 
     MultipartFile file1) throws JsonParseException, JsonMappingException, IOException {
 		
@@ -231,8 +234,41 @@ public class UserInfoController {
 					return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not saved");
 			}	
 	}
-	
-	
+
+	 */
+
+	@PostMapping("/createEmploye")
+	public ResponseEntity<?> createEmploye(@RequestPart("user") String user,
+										   @RequestParam(value = "image", required = false) MultipartFile file1)
+			throws JsonParseException, JsonMappingException, IOException {
+		UserInformation user1 = new ObjectMapper().readValue(user, UserInformation.class);
+		System.out.println(user1);
+
+		if (file1 != null) {
+			user1.setPhoto(file1.getOriginalFilename());
+		}
+
+		UserInformation user2 = userRepo.save(user1);
+		Optional<Role> adminRoleOptional = roleRepository.findByName(ERole.ROLE_ADMIN);
+		Role adminRole = adminRoleOptional.orElseGet(() -> {
+			Role newAdminRole = new Role(ERole.ROLE_ADMIN);
+			roleRepository.save(newAdminRole);
+			return newAdminRole;
+		});
+
+		user2.getRoles().add(adminRole);
+
+// Save the updated user2 object to ensure the changes persist in the database
+		userRepo.save(user2);
+			//Role userRole = (Role) userRepo.findUserByRole1(2);
+		//user2.setRoles(new HashSet<>((Collection) userRole));
+		if (user2 != null) {
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("User is saved");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not saved");
+		}
+	}
+
 	@PostMapping(path="/updateUsername")
 	public ResponseEntity<Boolean> updateUsername( @RequestBody ObjectNode json
 			){

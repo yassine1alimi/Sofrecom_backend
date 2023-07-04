@@ -122,12 +122,10 @@ private String salary;
 	@OneToMany(mappedBy="user2")
 	private List<Timesheet> timesheets1;*/
 	
-	@OneToMany(mappedBy = "postCreator",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private Set<Post> userPosts;
 
 
-    @OneToMany(mappedBy = "postEvaluator",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private Set<EvaluatePost> evaluatePostSet;
+
+
 
 
 
@@ -375,24 +373,10 @@ private String salary;
 	}
 
 
-	public Set<Post> getUserPosts() {
-		return userPosts;
-	}
 
 
-	public void setUserPosts(Set<Post> userPosts) {
-		this.userPosts = userPosts;
-	}
 
 
-	public Set<EvaluatePost> getEvaluatePostSet() {
-		return evaluatePostSet;
-	}
-
-
-	public void setEvaluatePostSet(Set<EvaluatePost> evaluatePostSet) {
-		this.evaluatePostSet = evaluatePostSet;
-	}
 
 
 	public Set<String> getUserPreferences() {
