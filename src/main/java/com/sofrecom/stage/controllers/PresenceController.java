@@ -44,14 +44,14 @@ public class PresenceController {
 
 	@PostMapping("/createPresence")
 	public Presence createPresence(@RequestBody ObjectNode presence, @RequestParam Long id) throws JsonProcessingException {
-		Presence pre = new Presence();
-		pre.setNbrreclamations(new ObjectMapper().treeToValue(presence.get("nbrreclamations"), Integer.class));
-		pre.setDay(LocalDate.parse(new ObjectMapper().treeToValue(presence.get("day"), String.class)));
-		Optional<UserInformation> user = userRepo.findById(id);
-		if (user.isPresent()) {
-			pre.setUserInfo(user.get());
-		}
-		return presenceRepo.save(pre);
+	    Presence pre = new Presence();
+	    pre.setNbrreclamations(presence.get("nbrreclamations").asText());  // Use asText() to retrieve String value
+	    pre.setDay(LocalDate.parse(presence.get("day").asText()));  // Use asText() to retrieve String value
+	    Optional<UserInformation> user = userRepo.findById(id);
+	    if (user.isPresent()) {
+	        pre.setUserInfo(user.get());
+	    }
+	    return presenceRepo.save(pre);
 	}
 	
 	@DeleteMapping("/presence/delete/{id}")

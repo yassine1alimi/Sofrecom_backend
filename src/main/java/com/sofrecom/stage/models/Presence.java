@@ -25,7 +25,7 @@ public class Presence {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private LocalDate day;
-	private int nbrreclamations;
+	private String nbrreclamations;
 
 	@ManyToOne
 	private UserInformation userInfo ;

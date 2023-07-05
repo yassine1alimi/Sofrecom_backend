@@ -51,7 +51,8 @@ import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import static com.sofrecom.stage.models.ERole.ROLE_ADMIN;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserInfoController {
@@ -249,17 +250,23 @@ public class UserInfoController {
 		}
 
 		UserInformation user2 = userRepo.save(user1);
-		Optional<Role> adminRoleOptional = roleRepository.findByName(ERole.ROLE_ADMIN);
+		Optional<Role> adminRoleOptional = roleRepository.findByName(ERole.ROLE_EMPLOYE);
 		Role adminRole = adminRoleOptional.orElseGet(() -> {
-			Role newAdminRole = new Role(ERole.ROLE_ADMIN);
+			Role newAdminRole = new Role(ERole.ROLE_EMPLOYE);
 			roleRepository.save(newAdminRole);
 			return newAdminRole;
 		});
 
 		user2.getRoles().add(adminRole);
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+		String encodedPassword = passwordEncoder.encode("1234567");
+
+		user2.setPassword(encodedPassword);
 
 // Save the updated user2 object to ensure the changes persist in the database
 		userRepo.save(user2);
+		
 			//Role userRole = (Role) userRepo.findUserByRole1(2);
 		//user2.setRoles(new HashSet<>((Collection) userRole));
 		if (user2 != null) {
@@ -268,7 +275,6 @@ public class UserInfoController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not saved");
 		}
 	}
-
 	@PostMapping(path="/updateUsername")
 	public ResponseEntity<Boolean> updateUsername( @RequestBody ObjectNode json
 			){
