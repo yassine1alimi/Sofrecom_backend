@@ -75,7 +75,9 @@ private LocalDate dateEntree;
 private LocalDate dateSortie;
 private String salary;
 
-
+private int dureeConges = 30;
+private int joursConges;
+private int soldeConges = 30;
 	private int archived = 1 ; 
 	
 	
@@ -387,5 +389,7 @@ private String salary;
 	public void setUserPreferences(Set<String> userPreferences) {
 		this.userPreferences = userPreferences;
 	}
-	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user4")
+	private List<Conge> conges;
 }

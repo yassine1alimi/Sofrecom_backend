@@ -104,20 +104,7 @@ public class DemandeController {
 	public List<Demande> getDemandeByStatus (){
 		return demandeRepo.getDemandeByStatus();
 	}
-	/*
-	@GetMapping("/dureeDemande/{id}")
-	public int getDuree(@PathVariable Long id ) {
-		return demandeService.countDuree(id);
-	}
-	*/
-	/*
-	@GetMapping("/soldeDemande/{id}")
-	public int getSoldeDemande(@PathVariable Long id ) {
-		UserInformation user = userRepo.findById(id).get();
-		return user.getJoursDemandes() - demandeService.countDuree(id);
-	}
 	
-	*/
 	
 	
 }
