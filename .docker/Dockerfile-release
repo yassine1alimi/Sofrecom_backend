@@ -1,0 +1,11 @@
+FROM dockerproxy.repos.tech.orange/bitnami/java:11
+VOLUME /tmp
+COPY .docker/sonar-cacerts /opt/bitnami/java/lib/security/cacerts
+COPY .docker/certificateChain.pem //opt/bitnami/java/lib/security/certificateChain.pem
+COPY .docker/certificateChain.pem /usr/local/share/ca-certificates/certificateChain.pem
+ARG JAR_FILE=target/ROOT.jar
+COPY target/ROOT.jar /app/app.jar
+COPY .docker/run.sh /run.sh
+RUN update-ca-certificates &&  install_packages telnet openssh-client  iputils-ping vim && chmod +x /run.sh
+ENTRYPOINT ["/run.sh"]
+USER 33

@@ -1,0 +1,96 @@
+include:
+  - project: 'to-be-continuous/maven'
+    ref: '3'
+    file: '/templates/gitlab-ci-maven.yml'
+#Checkmarkx template
+  - project: 'to-be-continuous/custom/checkmarx'
+    ref: '2.0.0'
+    file: '/templates/gitlab-ci-checkmarx.yml'
+  - project: 'to-be-continuous/sonar'
+    ref: '3.1.0'
+    file: '/templates/gitlab-ci-sonar.yml'
+  - project: 'devrap/gitlab/gitlab-ci-templates/sonar'
+    ref: '<template_tag_or_branch_to_use>'
+    file: '/templates/gitlab-ci-sonar-java-maven.yml'
+
+
+variables:
+  SONAR_BASE_ARGS: >-
+    sonar:sonar 
+    -Dsonar.host.url=${SONAR_URL} 
+    -Dsonar.projectName=${CI_PROJECT_PATH}
+    -Dsonar.links.homepage=${CI_PROJECT_URL} 
+    -Dsonar.links.ci=${CI_PROJECT_URL}/-/pipelines 
+    -Dsonar.links.issue=${CI_PROJECT_URL}/-/issues
+    -Dsonar.projectKey=win_owf_tun_tun-app_AYPCfoaSK13CNffLbySS
+  #CX_SERVER: "https://securecode.itn.intraorange/"
+  MAVEN_IMAGE: maven:3.8.1-openjdk-17-slim
+  CF_USER: "$CF_USER"
+  CF_PASSWORD: "$CF_PASSWORD"
+  CHECKMARX_TOKEN: "$CHECKMARX_TOKEN"
+  CX_TEAM: CxServer\ORANGE\WIN\SOFRECOM\TUNISIE\TUN
+  CHECKMARX_PROJECTNAME: CxServer\ORANGE\WIN\SOFRECOM\TUNISIE\TUN\tun-app
+  CF_URL : https://api.cloudfoundry-cluster1-z1.itn.intraorange
+  CI_PROJECT_NAME : tunerApp
+
+stages:
+  - build
+  - quality
+  - test
+  - build_back
+  - deploy
+#   - mvn-snapshot
+
+build_back:
+  image: $MAVEN_IMAGE
+  stage: build_back
+  script:
+    - mvn clean install -Pdev
+  tags:
+    - graas
+  artifacts:
+    paths:
+      - target/ROOT.jar
+DEPLOY:
+  image: dockerproxy.popfr1.repos.tech.orange/governmentpaas/cf-cli
+  stage: deploy
+  before_script:
+    - export HTTP_PROXY=""
+    - export CI_DEPENDENCY_PROXY_SERVER=""
+    - export CI_DEPENDENCY_PROXY_USER=""
+    - export CI_DEPENDENCY_PROXY_PASSWORD=""
+    - export CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX=""
+    - export CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX=""
+  needs:
+    - build_back
+    - build_front
+  script:
+    - cf login  -a api.cloudfoundry-cluster1-z1.itn.intraorange -u $CF_USER -p $CF_PASSWORD --skip-ssl-validation
+    - cf target -o $CF_ORG
+    - cf target -s $ENV_SPACE
+    - cf push -f manifest.yml
+  tags:
+    - anode
+  only:
+    - develop
+  when: manual
+# nom-de-votre-job:
+#   extends: .sonar-analyse-java-maven
+
+# sonarqube-check:
+#   image: maven:3.6.3-jdk-11
+#   variables:
+#     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+#     GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+#   cache:
+#     key: "${CI_JOB_NAME}"
+#     paths:
+#       - .sonar/cache
+#   script:
+#     - mvn verify sonar:sonar -Dsonar.projectKey=win_owf_tun_tun-app_AYPCfoaSK13CNffLbySS
+#   allow_failure: true
+#   only:
+#     - merge_requests
+#     # - master # or the name of your main branch
+#     - develop
+

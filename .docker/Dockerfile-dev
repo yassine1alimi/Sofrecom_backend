@@ -1,0 +1,5 @@
+FROM dockerproxy-iva.si.francetelecom.fr/tomcat:8-jdk11
+COPY .docker/sonar-cacerts /usr/local/openjdk-11/lib/security/cacerts
+COPY .docker/certificateChain.pem /usr/local/openjdk-11/lib/security/certificateChain.pem
+
+WORKDIR /usr/local/tomcat/webapps

@@ -1,0 +1,22 @@
+---
+applications:
+  - name: stage-devBack
+    instances: 1
+    memory: 1024M
+    disk_quota: 512M
+    buildpacks:
+      - java_buildpack_v4_52
+    path: target/ROOT.jar
+    services:
+      - StageBdDev
+
+  - name: tuner-devFront
+    instances: 1
+    memory: 1032M
+    disk_quota: 512M
+    buildpacks:
+      - staticfile_buildpack_v1_5_36
+    path: src/main/frontend/dist
+    env:
+      FORCE_HTTPS: true
+
