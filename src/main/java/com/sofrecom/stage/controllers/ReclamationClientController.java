@@ -61,125 +61,125 @@ public class ReclamationClientController {
 	@Autowired
 	private IUtilidateurRepo userRepo ;
 	private static final Logger logger = LoggerFactory.getLogger(ReclamationClientController.class);
-	
-    @Autowired
-    private ReclamationClientService reclamationClientService;
-@Autowired
-private IEmployeRepo employeRepo;
 
-@Autowired
-private ServiceManager serviceManager;
+	@Autowired
+	private ReclamationClientService reclamationClientService;
+	@Autowired
+	private IEmployeRepo employeRepo;
+
+	@Autowired
+	private ServiceManager serviceManager;
 
 
 
 	@PostMapping("/create")
-    public ReclamationClient createCandidate(@Valid @RequestBody ReclamationClient reclamationClient) {
+	public ReclamationClient createCandidate(@Valid @RequestBody ReclamationClient reclamationClient) {
 		return reclamationClientRepo.save(reclamationClient);
-		
+
 	}
-	
+
 	/*
 	@PostMapping("/createReclamation")
 	public ReclamationClient createReclamation ( @Valid @RequestBody ReclamationClient reclamationClient, @RequestParam Long id ) {
-		
+
 		UserInformation user = userRepo.findById(id).get();
 		reclamationClient.setUserReclamation(user);
 		return reclamationClientRepo.save(reclamationClient);
 	}
-	
-	
+
+
 	*/
-	
-	
+
+
 	@GetMapping("/ReclamationClients")
 	public List<ReclamationClient> getAllReclamationClients() {
 		return reclamationClientRepo.findAll();
 	}
 
-	
-	private final Path rootLocation = Paths.get("C:\\Users\\STRIX\\Downloads1");	
-	
+
+	private final Path rootLocation = Paths.get("C:\\Users\\STRIX\\Downloads1");
+
 	@PostMapping("/createreclamationClient1")
-    public ResponseEntity<?> createReclamationClient(@RequestPart("reclamationClient") String reclamationClient, @RequestParam("pj1") 
-    MultipartFile file1,@RequestParam("pj2") MultipartFile file2,@RequestParam Long id) throws JsonParseException, JsonMappingException, IOException {
-		
-		
-			
+	public ResponseEntity<?> createReclamationClient(@RequestPart("reclamationClient") String reclamationClient, @RequestParam("pj1")
+	MultipartFile file1,@RequestParam("pj2") MultipartFile file2,@RequestParam Long id) throws JsonParseException, JsonMappingException, IOException {
+
+
+
 		ReclamationClient reclamationClient1 = new ObjectMapper().readValue(reclamationClient , ReclamationClient.class);
-				System.out.println(reclamationClient1);
-				UserInformation user = userRepo.findById(id).get();
-				reclamationClient1.setPj1(file1.getOriginalFilename());
-				
-				reclamationClient1.setPj2(file2.getOriginalFilename());
-				reclamationClient1.setUserReclamation(user);
-				ReclamationClient reclamationClient2 = reclamationClientRepo.save(reclamationClient1);
-				if (reclamationClient2!=null) {
-				return  ResponseEntity.status(HttpStatus.ACCEPTED).body("User is saved");
-				}else {
-					return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not saved");
-			}	
+		System.out.println(reclamationClient1);
+		UserInformation user = userRepo.findById(id).get();
+		reclamationClient1.setPj1(file1.getOriginalFilename());
+
+		reclamationClient1.setPj2(file2.getOriginalFilename());
+		reclamationClient1.setUserReclamation(user);
+		ReclamationClient reclamationClient2 = reclamationClientRepo.save(reclamationClient1);
+		if (reclamationClient2!=null) {
+			return  ResponseEntity.status(HttpStatus.ACCEPTED).body("User is saved");
+		}else {
+			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not saved");
+		}
 	}
-	
-	
+
+
 	@PostMapping("/createreclamationClient")
-    public ResponseEntity<?> createReclamationClient(@RequestPart("reclamationClient") String reclamationClient, @RequestParam("pj1") 
-    MultipartFile file1,@RequestParam("pj2") MultipartFile file2) throws JsonParseException, JsonMappingException, IOException {
-		
-		
-		this.serviceManager.restTemplateStart("http://localhost:9090/process/start");
+	public ResponseEntity<?> createReclamationClient(@RequestPart("reclamationClient") String reclamationClient, @RequestParam("pj1")
+	MultipartFile file1,@RequestParam("pj2") MultipartFile file2) throws JsonParseException, JsonMappingException, IOException {
+
+
+		/*	this.serviceManager.restTemplateStart("http://localhost:9090/process/start");*/
 		ReclamationClient reclamationClient1 = new ObjectMapper().readValue(reclamationClient , ReclamationClient.class);
-				System.out.println(reclamationClient1);
-				
-				reclamationClient1.setPj1(file1.getOriginalFilename());
-				
-				reclamationClient1.setPj2(file2.getOriginalFilename());
-				ReclamationClient reclamationClient2 = reclamationClientRepo.save(reclamationClient1);
-				if (reclamationClient2!=null) {
-					this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",reclamationClient1.getEmail());
+		System.out.println(reclamationClient1);
+
+		reclamationClient1.setPj1(file1.getOriginalFilename());
+
+		reclamationClient1.setPj2(file2.getOriginalFilename());
+		ReclamationClient reclamationClient2 = reclamationClientRepo.save(reclamationClient1);
+		if (reclamationClient2!=null) {
+					/*this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",reclamationClient1.getEmail());
 					this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");
-					String application_status = this.serviceManager.restTemplategetstatus("http://localhost:9090/process/getoutputVariables");
-					
-				return  ResponseEntity.status(HttpStatus.ACCEPTED).body("User is saved");
-				}else {
-					return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not saved");
-			}	
+					String application_status = this.serviceManager.restTemplategetstatus("http://localhost:9090/process/getoutputVariables");*/
+
+			return  ResponseEntity.status(HttpStatus.ACCEPTED).body("User is saved");
+		}else {
+			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not saved");
+		}
 	}
-	
-	 
-	
+
+
+
 	@GetMapping("/downloadFile/{fileName:.+}")
-	
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws Exception {
-		
-        // Load file as Resource
-        Resource resource = reclamationClientService.loadFileAsResource(fileName);
 
-        // Try to determine file's content type
-        String contentType = null;
-        try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException ex) {
-            logger.info("Could not determine file type.");
-        }
+	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws Exception {
 
-        // Fallback to the default content type if type could not be determined
-        if(contentType == null) {
-            contentType = "application/octet-stream";
-        }
+		// Load file as Resource
+		Resource resource = reclamationClientService.loadFileAsResource(fileName);
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
-    }
-	
+		// Try to determine file's content type
+		String contentType = null;
+		try {
+			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+		} catch (IOException ex) {
+			logger.info("Could not determine file type.");
+		}
+
+		// Fallback to the default content type if type could not be determined
+		if(contentType == null) {
+			contentType = "application/octet-stream";
+		}
+
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+
 	@GetMapping("/getreclamationClient/{id}")
 	public ResponseEntity<ReclamationClient> findById(@PathVariable("id") Long id,SecurityContextHolderAwareRequestWrapper request) {
-		 Principal connectedUser = request.getUserPrincipal();
-		 String currentusername = connectedUser.getName();
+		Principal connectedUser = request.getUserPrincipal();
+		String currentusername = connectedUser.getName();
 		Optional<ReclamationClient> emp = reclamationClientRepo.findById(id);
-		 Optional<UserInformation> currentuser = userRepo.findByUsername(currentusername);
-	/*	this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",currentuser.get().getEmail());
+		Optional<UserInformation> currentuser = userRepo.findByUsername(currentusername);
+		/*this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",currentuser.get().getEmail());
 
 		this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");*/
 		if (emp.isPresent())
@@ -188,105 +188,104 @@ private ServiceManager serviceManager;
 			return new ResponseEntity<ReclamationClient>(HttpStatus.NO_CONTENT);
 
 	}
-	
-	 @DeleteMapping("/reclamationClient/{id}")
-		void deleteNote(@PathVariable Long id) {
-		 reclamationClientRepo.deleteById(id);
-		  }
-		  
-	 
-	 @GetMapping("/accepterReclamation")
-		public void accepterReclamation( @RequestParam Long id) {
-		
-		 reclamationClientService.accepterReclamationClient(id);
-			
+
+	@DeleteMapping("/reclamationClient/{id}")
+	void deleteNote(@PathVariable Long id) {
+		reclamationClientRepo.deleteById(id);
 	}
-	
-	 @GetMapping("/refuserReclamation")
-		public void refuserReclamation (@RequestParam Long id) {
-			
-		 reclamationClientService.refuserReclamationClient(id);
-		}
-		 
-	 @GetMapping("/reclamationClients_attente")
-		public List<ReclamationClient> getReclamationClientByStatus (SecurityContextHolderAwareRequestWrapper request) {
-		 Principal connectedUser = request.getUserPrincipal();
-		 String currentusername = connectedUser.getName();
-		 Optional<UserInformation> currentuser = userRepo.findByUsername(currentusername);
+
+
+	@GetMapping("/accepterReclamation")
+	public void accepterReclamation( @RequestParam Long id) {
+
+		reclamationClientService.accepterReclamationClient(id);
+
+	}
+
+	@GetMapping("/refuserReclamation")
+	public void refuserReclamation (@RequestParam Long id) {
+
+		reclamationClientService.refuserReclamationClient(id);
+	}
+
+	@GetMapping("/reclamationClients_attente")
+	public List<ReclamationClient> getReclamationClientByStatus (SecurityContextHolderAwareRequestWrapper request) {
+		Principal connectedUser = request.getUserPrincipal();
+		String currentusername = connectedUser.getName();
+		Optional<UserInformation> currentuser = userRepo.findByUsername(currentusername);
 	/*		this.serviceManager.restTemplateAssignetask("http://localhost:9090/process/assignetask",currentuser.get().getEmail());
 			this.serviceManager.restTemplateCompleteTask("http://localhost:9090/process/completetask");*/
 
-			return reclamationClientRepo.getReclamationClientByStatus();
+		return reclamationClientRepo.getReclamationClientByStatus();
 
-		}
-	 
-	 @GetMapping("/reclamationClientUser/{id}")
-		public List<ReclamationClient> getReclamationClientsByIdUser(@PathVariable("id") Long id){
-			
-			UserInformation user = userRepo.findById(id).get();
-			return user.getReclamations();
-			
-		}
-	 @DeleteMapping("/deleteReclamationClient/{id}")
-		public ResponseEntity<ReclamationClient> deleteReclamationClient (@PathVariable("id") Long id) {
-			Optional<ReclamationClient> reclamationClient = reclamationClientRepo.findById(id);
-			if (reclamationClient.isPresent()) {
-				reclamationClientRepo.delete(reclamationClient.get());
-				return new ResponseEntity<ReclamationClient>(reclamationClient.get(), HttpStatus.ACCEPTED);
-			} else
-				return new ResponseEntity<ReclamationClient>(HttpStatus.NOT_ACCEPTABLE);
-		}
-	 
-	 
-		 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 @GetMapping("/reclamations/statnombre")
-		public Long getnombrerecalamation() {
+	}
+
+	@GetMapping("/reclamationClientUser/{id}")
+	public List<ReclamationClient> getReclamationClientsByIdUser(@PathVariable("id") Long id){
+
+		UserInformation user = userRepo.findById(id).get();
+		return user.getReclamations();
+
+	}
+	@DeleteMapping("/deleteReclamationClient/{id}")
+	public ResponseEntity<ReclamationClient> deleteReclamationClient (@PathVariable("id") Long id) {
+		Optional<ReclamationClient> reclamationClient = reclamationClientRepo.findById(id);
+		if (reclamationClient.isPresent()) {
+			reclamationClientRepo.delete(reclamationClient.get());
+			return new ResponseEntity<ReclamationClient>(reclamationClient.get(), HttpStatus.ACCEPTED);
+		} else
+			return new ResponseEntity<ReclamationClient>(HttpStatus.NOT_ACCEPTABLE);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@GetMapping("/reclamations/statnombre")
+	public Long getnombrerecalamation() {
 		Long sum = reclamationClientService.Number_reclamation();
 		return sum;
-				
-		
+
+
 	}
-	 @GetMapping("/reclamations/statnombre2")
-		public Long getnombrerecalamation2() {
+	@GetMapping("/reclamations/statnombre2")
+	public Long getnombrerecalamation2() {
 		Long sum = reclamationClientService.Number_reclamation();
 		return sum;
-				
-		
+
+
 	}
-		@GetMapping("/reclamations/{etat}/statetat")
-		public Long getetatrecalamation(@PathVariable String etat) {
+	@GetMapping("/reclamations/{etat}/statetat")
+	public Long getetatrecalamation(@PathVariable String etat) {
 		Long sum = reclamationClientService.Etat_reclamation(etat);
 		return sum;
-		
+
 	}
-	 
-		@GetMapping("/reclamations/{type}/statetat")
-		public Long gettyperecalamation(@PathVariable String typeClaim) {
+
+	@GetMapping("/reclamations/{type}/statetat")
+	public Long gettyperecalamation(@PathVariable String typeClaim) {
 		Long sum = reclamationClientService.Type_reclamation(typeClaim);
 		return sum;
-		
+
 	}
-	 
-		@GetMapping("/reclamations/{departement}/statetat")
-		public Long getdepartementrecalamation(@PathVariable String departement) {
+
+	@GetMapping("/reclamations/{departement}/statetat")
+	public Long getdepartementrecalamation(@PathVariable String departement) {
 		Long sum = reclamationClientService.Departement_reclamation(departement);
 		return sum;
-		
+
 	}
-	 
+
 }
-        
-	
-	
+
+
 

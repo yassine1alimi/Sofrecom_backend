@@ -27,8 +27,8 @@ public class Demande implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idDemande;
 	private String typeDemande;
-	private Date debutDemande;
-	private Date finDemande;
+	private String urgence;
+	private String categorie;
 	private Date createdAt;
 	private String description;
 	//private int duree ; 
