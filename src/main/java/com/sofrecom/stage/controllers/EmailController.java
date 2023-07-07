@@ -57,19 +57,22 @@ public class EmailController {
 			ReclamationClient rec = reclamationClient.get();
 			recservice.accepterReclamationClient(rec.getIdReclamation());
 			Mail mail = new Mail();
-			mail.setFrom("sofrecom.recrutement1@gmail.com");
+			mail.setFrom("yassine.mnasria@esprit.tn");
 			mail.setTo(reclamationClient.get().getEmail());
-			mail.setSubject("Invitation to interview at Sofrecom");
+			mail.setSubject("Appreciation for Lodging Complaints to Sofrecom");
 			mail.setContent("Dear "+reclamationClient.get().getPrenom()+","+"\r\n" + 
 					"\r\n" + 
-					"Thank you for applying to Sofrecom.\r\n" + 
+					"Thank you for taking the time to submit your complaints to Sofrecom. " +
+					"We greatly value your feedback as it helps us improve our services and ensure the highest level of customer satisfaction..\r\n" +
 					 
 					"\r\n" + 
-					"If you have any questions or need additional information, please don’t hesitate to contact me by telephone or email.\r\n" + 
+					"Rest assured, your complaints have been duly received, and we have already initiated an investigation into the matters you raised. " +
+					"Our team is diligently reviewing the details and working towards finding a prompt and satisfactory resolution.\r\n" +
 					"\r\n" + 
 					"\r\n" + 
 					"\r\n" + 
-					"best regards,");
+					"best regards\r\n" +
+					"Sofrecom Customer Support Team");
 			emailService.sendSimpleMessage(mail);
 			
 			return "message sent successffully";
@@ -81,15 +84,19 @@ public class EmailController {
 			
 			Optional<ReclamationClient> reclamationClient = reclamationClientRepo.findById(id);
 			Mail mail = new Mail();
-			mail.setFrom("sofrecom.recrutement@gmail.com");
+			mail.setFrom("yassine.mnasria@esprit.tn");
 			mail.setTo(reclamationClient.get().getEmail());
-			mail.setSubject("Reply for your application at Sofrecom");
+			mail.setSubject("Regretful Response to Your Application at Sofrecom");
 			mail.setContent("Dear "+reclamationClient.get().getPrenom()+","+"\r\n" + 
 					"\r\n" + 
-					"Thank you for contacting Sofrecom.\r\n" + 
-					"\r\n" + 
-					
-					"best regards,");
+					"Thank you for your recent application to Sofrecom. " +
+					"We appreciate your interest in joining our team and for taking the time to submit your application.\n" +
+					"After careful consideration and review of your qualifications and experience, we regret to inform you that we will not be able to proceed further with your application at this time. \r\n" +
+					"\r\n" +
+					"\r\n" +
+					"\r\n" +
+					"best regards\r\n" +
+					"Sofrecom Customer Support Team");
 			emailService.sendSimpleMessage(mail);
 			return "message sent successffully";
 			
